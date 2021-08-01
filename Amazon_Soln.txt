@@ -1,0 +1,12 @@
+We used a Deep learning model built on top of BERT model
+
+We form a input string which is of the form :
+[CLS] Preprocessed_TITLE [SEP] Preprocessed_BULLET_POINTS [SEP]
+
+The input string is tokenized using BERT tokenizer, then padded or truncated to a fixed length of 128 and fed into the BERT model, to get an embedding.
+The BRAND is converted to an integer label and passed through a single layer neural network.
+
+The input text embedding is passed through a dropout layer (with p = 0.3) to prevent overfitting and the hidden layer from the BRAND is concatenated to the embedding and passed through a single dense linear layer followed by a softmax layer to predict the probabilities of the product belonging to a browse node class. The class with the maximum probability is the predicted class.
+
+We used a batch size of 56 and trained on Google colab GPU. We randomly sampled 1 lakh points from the given data for every few epochs of training to make training slightly faster since we did not have unlimited cloud time, and split into training + validation set in 70 : 30 ratio for training. 
+The current submission is trained for 8 epochs and using first 1 lakh samples of the given data only (random sampling and training for each epoch was added after this, but we did not get enough time to train it for more than 4 epochs).
